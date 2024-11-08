@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" 
+    volumes:
+      - .:/usr/src/app  # Only mount the source code directory
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/blogger  # Connection string to MongoDB container
+    depends_on:
+      - mongo  # Ensures the app waits for MongoDB to be up
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest  # Use the latest MongoDB image
+    restart: always  # Automatically restart if MongoDB stops unexpectedly
+    ports:
+      - "27017:27017"  # Expose MongoDB port for external access if needed
+    environment:
+      MONGO_INITDB_DATABASE: blogger  # Create the blogger database by default
+    volumes:
+      - mongo_data:/data/db  # Persistent storage for MongoDB data
+    networks:
+      - app-network
+
+volumes:
+  mongo_data:  # Define a volume for MongoDB data persistence
+
+networks:
+  app-network:
+    driver: bridge
