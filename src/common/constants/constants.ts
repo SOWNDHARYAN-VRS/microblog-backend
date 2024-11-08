@@ -1,4 +1,6 @@
-export class Constants {
-    static readonly TOKEN: string = "token";
-    static readonly AUTHORIZATION: string="authorization";
+export const constants:Record<string,string> ={
+   TOKEN:"token",
+   AUTHORIZATION:"authorization",
+    MONGODBURI:"MONGODB_URI"
+    
 }
