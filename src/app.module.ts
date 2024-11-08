@@ -12,12 +12,12 @@ import { Constants } from './common/constants/constants';
   imports: [
     ConfigModule.forRoot({
       isGlobal:true,
-      envFilePath: ['default.env'],
+      envFilePath: ['.env.dev'],
     }),
     //env is not working when converted to docker image
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'),
+        uri: configService.get<string>(Constants.MONGODBURI),
       }),
       inject: [ConfigService],
     }),
